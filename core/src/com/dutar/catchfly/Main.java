@@ -9,62 +9,76 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.Random;
+
 public class Main extends ApplicationAdapter {
     SpriteBatch batch;
     Texture imgBackground;
+    Texture imgFly;
     float screenX;
     float screenY;
 
-    Texture imgFly;
-    float imgFlyX;
-    float imgFlyY;
-    float imgFlyWidth;
-    float imgFlyHeight;
-
-    float velocityX = 5;
-    float velocityY = 5;
-    float gravity = 0.1f;
-
+    Fly[] flys = new Fly[5];
 
     @Override
     public void create() {
         batch = new SpriteBatch();
-
         screenX = Gdx.graphics.getWidth();
         screenY = Gdx.graphics.getHeight();
 
         imgBackground = new Texture("background.png");
-
         imgFly = new Texture("fly.png");
-        imgFlyX = screenX / 2;
-        imgFlyY = screenY / 2;
-        imgFlyWidth = screenX / 16;
-        imgFlyHeight = screenY / 9;
+
+        for (int i = 0; i < flys.length; i++) {
+            Random random = new Random();
+
+            flys[i] = new Fly();
+            flys[i].setXCoordinate(random.nextFloat() * 1000);
+            flys[i].setYCoordinate(random.nextFloat() * 1000);
+            if (i % 2 == 0) {
+                flys[i].setVelocityX(5);
+                flys[i].setVelocityY(5);
+            } else {
+                flys[i].setVelocityX(-5);
+                flys[i].setVelocityY(-5);
+            }
+            flys[i].setVelocityX(5);
+            flys[i].setVelocityY(5);
+            flys[i].setWidth(screenX / 16);
+            flys[i].setHeight(screenY / 9);
+        }
     }
 
     @Override
     public void render() {
-
-        imgFlyX = imgFlyX + velocityX;
-        imgFlyY = imgFlyY + velocityY;
-
-        if (imgFlyX <= 0) {
-            velocityX = 5;
-        }
-        if (imgFlyX >= screenX - imgFlyWidth) {
-            velocityX = -5;
-        }
-
-        if (imgFlyY <= 0) {
-            velocityY = 5;
-        }
-        if (imgFlyY >= screenY-imgFlyHeight) {
-            velocityY = -5;
-        }
-
         batch.begin();
         batch.draw(imgBackground, 0, 0, screenX, screenY);
-        batch.draw(imgFly, imgFlyX, imgFlyY, imgFlyWidth, imgFlyHeight);
+
+
+        for (int i = 0; i < flys.length; i++) {
+            if (flys[i].getXCoordinate() <= 0) {
+                flys[i].setVelocityX(5);
+            }
+            if (flys[i].getXCoordinate() >= screenX - flys[i].getWidth()) {
+                flys[i].setVelocityX(-5);
+            }
+
+            if (flys[i].getYCoordinate() <= 0) {
+                flys[i].setVelocityY(5);
+            }
+            if (flys[i].getYCoordinate() >= screenY - flys[i].getHeight()) {
+                flys[i].setVelocityY(-5);
+            }
+
+            flys[i].setXCoordinate(flys[i].getXCoordinate() + flys[i].getVelocityX());
+            flys[i].setYCoordinate(flys[i].getYCoordinate() + flys[i].getVelocityY());
+
+            batch.draw(imgFly, flys[i].getXCoordinate(), flys[i].getYCoordinate(), flys[i].getWidth(), flys[i].getHeight());
+
+        }
+
+        //batch.draw(imgFly, screenX / 2, screenY / 2, screenX / 16, screenX / 9);
+
         batch.end();
     }
 
