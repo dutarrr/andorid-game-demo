@@ -18,7 +18,7 @@ public class Main extends ApplicationAdapter {
     float screenX;
     float screenY;
 
-    Fly[] flys = new Fly[5];
+    Fly[] flys = new Fly[20];
 
     @Override
     public void create() {
@@ -33,8 +33,8 @@ public class Main extends ApplicationAdapter {
             Random random = new Random();
 
             flys[i] = new Fly();
-            flys[i].setXCoordinate(random.nextFloat() * 1000);
-            flys[i].setYCoordinate(random.nextFloat() * 1000);
+            flys[i].setXCoordinate(random.nextInt((int) screenX));
+            flys[i].setYCoordinate(random.nextInt((int) screenY));
             if (i % 2 == 0) {
                 flys[i].setVelocityX(5);
                 flys[i].setVelocityY(5);
