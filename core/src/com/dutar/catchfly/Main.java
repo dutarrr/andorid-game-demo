@@ -80,9 +80,12 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        //******************************************************
         batch.draw(imgBackground, 0, 0, screenX, screenY);
         fontName.draw(batch,"Düzgün",50,50);
         fontName.draw(batch,"Tutar",100,100);
+        //******************************************************
 
         //******************************************************
         batch.draw(sprite, sprite.getX(), sprite.getY());
@@ -110,7 +113,6 @@ public class Main extends ApplicationAdapter {
             batch.draw(imgFly, flys[i].getXCoordinate(), flys[i].getYCoordinate(), flys[i].getWidth(), flys[i].getHeight());
         }
         //******************************************************
-
 
 
         batch.end();
