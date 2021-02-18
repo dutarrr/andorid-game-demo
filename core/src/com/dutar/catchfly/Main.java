@@ -2,23 +2,22 @@ package com.dutar.catchfly;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.Random;
 
 public class Main extends ApplicationAdapter {
     SpriteBatch batch;
+    Sprite sprite;
+
     Texture imgBackground;
     Texture imgFly;
+    Texture imgGameOver;
     float screenX;
     float screenY;
-
-    Fly[] flys = new Fly[20];
+    Fly[] flys = new Fly[1];
 
     @Override
     public void create() {
@@ -26,9 +25,11 @@ public class Main extends ApplicationAdapter {
         screenX = Gdx.graphics.getWidth();
         screenY = Gdx.graphics.getHeight();
 
+        //******************************************************
         imgBackground = new Texture("background.png");
         imgFly = new Texture("fly.png");
 
+        //hareketli sinek
         for (int i = 0; i < flys.length; i++) {
             Random random = new Random();
 
@@ -47,6 +48,14 @@ public class Main extends ApplicationAdapter {
             flys[i].setWidth(screenX / 16);
             flys[i].setHeight(screenY / 9);
         }
+        //******************************************************
+
+        //******************************************************
+        imgGameOver = new Texture("gameover.png");
+        sprite = new Sprite(imgGameOver);
+        sprite.setPosition(screenX / 2 - sprite.getWidth() / 2, screenY / 2 - sprite.getHeight() / 2);
+        //***************************************************
+
     }
 
     @Override
@@ -54,7 +63,11 @@ public class Main extends ApplicationAdapter {
         batch.begin();
         batch.draw(imgBackground, 0, 0, screenX, screenY);
 
+        //******************************************************
+        batch.draw(sprite, sprite.getX(), sprite.getY());
+        //******************************************************
 
+        //******************************************************
         for (int i = 0; i < flys.length; i++) {
             if (flys[i].getXCoordinate() <= 0) {
                 flys[i].setVelocityX(5);
@@ -74,10 +87,8 @@ public class Main extends ApplicationAdapter {
             flys[i].setYCoordinate(flys[i].getYCoordinate() + flys[i].getVelocityY());
 
             batch.draw(imgFly, flys[i].getXCoordinate(), flys[i].getYCoordinate(), flys[i].getWidth(), flys[i].getHeight());
-
         }
-
-        //batch.draw(imgFly, screenX / 2, screenY / 2, screenX / 16, screenX / 9);
+        //******************************************************
 
         batch.end();
     }
