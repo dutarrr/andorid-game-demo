@@ -2,7 +2,9 @@ package com.dutar.catchfly;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -18,6 +20,9 @@ public class Main extends ApplicationAdapter {
     float screenX;
     float screenY;
     Fly[] flys = new Fly[1];
+
+    BitmapFont fontName;
+    BitmapFont fontSurName;
 
     @Override
     public void create() {
@@ -56,12 +61,24 @@ public class Main extends ApplicationAdapter {
         sprite.setPosition(screenX / 2 - sprite.getWidth() / 2, screenY / 2 - sprite.getHeight() / 2);
         //***************************************************
 
+        //***************************************************
+        fontName = new BitmapFont();
+        fontName.setColor(Color.WHITE);
+        fontName.getData().setScale(4);
+
+        fontSurName = new BitmapFont();
+        fontSurName.setColor(Color.WHITE);
+        fontSurName.getData().setScale(4);
+        //***************************************************
+
     }
 
     @Override
     public void render() {
         batch.begin();
         batch.draw(imgBackground, 0, 0, screenX, screenY);
+        fontName.draw(batch,"Düzgün",50,50);
+        fontName.draw(batch,"Tutar",100,100);
 
         //******************************************************
         batch.draw(sprite, sprite.getX(), sprite.getY());
@@ -89,6 +106,8 @@ public class Main extends ApplicationAdapter {
             batch.draw(imgFly, flys[i].getXCoordinate(), flys[i].getYCoordinate(), flys[i].getWidth(), flys[i].getHeight());
         }
         //******************************************************
+
+
 
         batch.end();
     }
